@@ -130,15 +130,15 @@ let rec factor_geting s i temp =
     else match Char.escaped (String.get s i) with
          | "0"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
          | "1"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-		 | "2"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "3"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "4"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "5"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "6"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "7"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "8"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     | "9"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
-	     |  _  -> int_of_string (String.concat "" temp)
+         | "2"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "3"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "4"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "5"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "6"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "7"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "8"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         | "9"  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+         |  _  -> int_of_string (String.concat "" temp)
 	     
 
 let getfactor s =
