@@ -121,6 +121,25 @@ let formAbstractTree input = formAbstractTreeDetail (infixToPrefix input) Empty
 
 
 (*Mike code*)
+
+
+(*取得係數   目的是為了做運算，需將係數取出才能執行  *)
+(*使用方式就是 getfactor string(應該是從Leaf中取出來的string) *)
+let rec factor_geting s i temp =
+	if i > ((String.length s)-1) then int_of_string (String.concat "" temp)
+    else match Char.escaped (String.get s i) with
+	     | "x" -> int_of_string (String.concat "" temp)
+	     | "y" -> int_of_string (String.concat "" temp)
+	     |  _  -> factor_geting s (i+1) (temp@(Char.escaped (String.get s i))::[])
+	     
+
+let getfactor s =
+	factor_geting s 0 []
+(*加法中出現零的話  會將他簡單化   *)
+(*使用方式就是 (fun) plusSimple aTree(你想要簡化的樹) *)
+
+
+
 let isZeroLeaf l =
 	match l with
 	| Leaf (a) -> if a = "0" then true
@@ -141,3 +160,36 @@ let rec plusSimple aTree =
 	| Node(o, l,r ) -> if o = "+" then plusSimpling (Node (o,(plusSimple l),(plusSimple r)) )
 	                   else Node (o,(plusSimple l),(plusSimple r))
 	| Leaf (a) -> Leaf (a)
+
+(*減法中出現零的話  會將他簡單化   *)
+(*使用方式就是 (fun) minusSimple aTree(你想要簡化的樹) *)
+let minusSimpling aTree =
+	match aTree with
+	| Node (o, l,r )-> if (isZeroLeaf r) then l 
+	                   else Node (o, l, r)
+	| _ -> raise Oops
+
+
+let rec minusSimple aTree =
+	match aTree with
+	Empty -> raise Oops
+	| Node(o, l,r ) -> if o = "-" then minusSimpling (Node (o,(minusSimple l),(minusSimple r)) )
+	                   else Node (o,(minusSimple l),(minusSimple r))
+	| Leaf (a) -> Leaf (a)
+
+(*這邊是將 Tree 轉換成 List 然後再轉換成 String 最後呈現使用*)
+(*但是尚未完全符合先乘除後加減的原則 是用樹了順序來表示 *)
+let rec bitreeToList aTree =
+	match aTree with
+	Empty -> raise Oops
+	| Node(o, l,r ) -> (bitreeToList l)@(o::[])@(bitreeToList r)
+	| Leaf (a) -> a::[]
+let listToString l =
+	(String.concat "" l)
+
+let bitreeToString aTree = 
+	listToString (bitreeToList aTree)
+
+
+
+let x = Node ("*",Node ("-",Leaf("3"),Leaf("0")),Leaf("1") )
